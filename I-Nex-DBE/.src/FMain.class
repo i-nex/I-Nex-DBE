@@ -1,0 +1,37 @@
+' Gambas class file
+
+
+Public Sub ButtonBox1_Click()
+  Dim database As New Collection
+  Dim i As Integer
+  Dim Pic As Picture
+  Dialog.Filter = ["*.json", "JSON Data"]
+  Dialog.OpenFile()
+  ListView1.Clear
+  '= ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*.svg;*.wmf", "Drawing files"]
+  ButtonBox1.Text = Dialog.Path
+  database = JSON.Decode(File.Load(ButtonBox1.Text))
+  
+  
+  For i = 0 To database["DATABASE"].count - 1
+    Print Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
+    Try Pic = Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
+    Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
+    Pic.Clear
+  Next
+
+  FileProperties1.Path = Dialog.Path
+End
+
+Public Sub Form_Open()
+
+  
+
+End
+
+Public Sub ListView1_DblClick()
+
+  Try Print ListView1.Current.Text
+  Try Print ListView1.Current.Key
+
+End

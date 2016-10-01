@@ -1,0 +1,18 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.8.4
+Startup=FMain
+Version=0.0.1
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+Component=gb.util.web
+Component=gb.web
+Description="I-Nex JSON Database Editor"
+TabSize=2
+Language=en_US
+Maintainer=eloaders
+Address=michal@michal-EasyNote-SJ51
+License=General Public License
+PackageName=i-nex-dbe-0.0.1
+Packager=1
+Systems=autotools
