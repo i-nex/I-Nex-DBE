@@ -2,11 +2,15 @@ FMain
 
 0
 0
-0.0.1
+0.0.2
 
 gb.image
 gb.gui.qt
 gb.form
+gb.data
+gb.settings
 gb.util.web
 gb.web
+gb.xml
+gb.xml.html
 

@@ -1,0 +1,32 @@
+' Gambas class file
+
+Public Function Parsedata(id As Integer)
+  
+  TextBox1.Text = FMain.database["DATABASE"][id]["PROCESSOR_MODEL_NAME"]
+  ComboBox1.Text = FMain.database["DATABASE"][id]["PROCESSOR_SOCKET"]
+  ComboBox2.Text = FMain.database["DATABASE"][id]["PROCESSOR_PROCESS_SIZE"]
+  TextBox4.Text = FMain.database["DATABASE"][id]["PROCESSOR_TRANSISTORS"]
+  TextBox5.Text = FMain.database["DATABASE"][id]["PROCESSOR_DIE_SIZE"]
+  TextBox6.Text = FMain.database["DATABASE"][id]["PROCESSOR_TCASEMAX"]
+  TextBox7.Text = FMain.database["DATABASE"][id]["PROCESSOR_FREQUENCY"]
+  TextBox8.Text = FMain.database["DATABASE"][id]["PROCESSOR_TURBOCLOCK"]
+  TextBox9.Text = FMain.database["DATABASE"][id]["PROCESSOR_MULTIPLIER"]
+  TextBox10.Text = FMain.database["DATABASE"][id]["PROCESSOR_VOLTAGE"]
+  TextBox11.Text = FMain.database["DATABASE"][id]["PROCESSOR_TDP"]
+  ComboBox3.Text = FMain.database["DATABASE"][id]["PROCESSOR_MARKET"]
+  TextBox13.Text = FMain.database["DATABASE"][id]["PROCESSOR_PRODUCTION_STATUS"]
+  TextBox2.Text = FMain.database["DATABASE"][id]["PROCESSOR_RELEASED"]
+  TextBox15.Text = FMain.database["DATABASE"][id]["PROCESSOR_CODENAME"]
+  TextBox16.Text = FMain.database["DATABASE"][id]["PROCESSOR_PART"]
+  TextBox17.Text = FMain.database["DATABASE"][id]["PROCESSOR_MEMORYSUPPORT"]
+  ComboBox4.Text = FMain.database["DATABASE"][id]["PROCESSOR_OFCORES"]
+  SpinBox1.Value = CInt(FMain.database["DATABASE"][id]["PROCESSOR_SMPCPUS"])
+  TextBox20.Text = FMain.database["DATABASE"][id]["PROCESSOR_INTEGRATEDGRAPHIC"]
+End
+
+
+Public Sub Form_Open()
+
+  
+
+End

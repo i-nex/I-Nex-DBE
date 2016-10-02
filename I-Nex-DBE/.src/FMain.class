@@ -1,8 +1,7 @@
 ' Gambas class file
 
-
+Public database As New Collection
 Public Sub ButtonBox1_Click()
-  Dim database As New Collection
   Dim i As Integer
   Dim Pic As Picture
   Dialog.Filter = ["*.json", "JSON Data"]
@@ -33,5 +32,8 @@ Public Sub ListView1_DblClick()
 
   Try Print ListView1.Current.Text
   Try Print ListView1.Current.Key
+  Form1.Parsedata(ListView1.Current.Key)
+  Form1.Show
 
 End
+

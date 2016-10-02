@@ -1,12 +1,16 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.8.4
 Startup=FMain
-Version=0.0.1
+Version=0.0.2
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
+Component=gb.data
+Component=gb.settings
 Component=gb.util.web
 Component=gb.web
+Component=gb.xml
+Component=gb.xml.html
 Description="I-Nex JSON Database Editor"
 TabSize=2
 Language=en_US
