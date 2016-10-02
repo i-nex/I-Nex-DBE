@@ -16,9 +16,12 @@ Public Sub ButtonBox1_Click()
     Print Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
     Try Pic = Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
     Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
+    If Error Then
+        ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
+    Endif
     Pic.Clear
   Next
-
+  ValueBox1.Value = ListView1.Count
   FileProperties1.Path = Dialog.Path
 End
 

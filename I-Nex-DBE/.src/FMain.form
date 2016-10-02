@@ -10,6 +10,10 @@
     MoveScaled(1,59,113,4)
   }
   { FileProperties1 FileProperties
-    MoveScaled(58,1,56,57)
+    MoveScaled(58,1,56,44)
+  }
+  { ValueBox1 ValueBox
+    MoveScaled(58,46,24,4)
+    ReadOnly = True
   }
 }
