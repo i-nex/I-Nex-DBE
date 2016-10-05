@@ -20,7 +20,7 @@ Public Function Parsedata(id As Integer)
   TextBox16.Text = FMain.database["DATABASE"][id]["PROCESSOR_PART"]
   TextBox17.Text = FMain.database["DATABASE"][id]["PROCESSOR_MEMORYSUPPORT"]
   ComboBox4.Text = FMain.database["DATABASE"][id]["PROCESSOR_OFCORES"]
-  SpinBox1.Value = CInt(FMain.database["DATABASE"][id]["PROCESSOR_SMPCPUS"])
+  Try SpinBox1.Value = CInt(FMain.database["DATABASE"][id]["PROCESSOR_SMPCPUS"])
   TextBox20.Text = FMain.database["DATABASE"][id]["PROCESSOR_INTEGRATEDGRAPHIC"]
 End
 

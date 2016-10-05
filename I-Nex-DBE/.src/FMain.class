@@ -4,20 +4,25 @@ Public database As New Collection
 Public Sub ButtonBox1_Click()
   Dim i As Integer
   Dim Pic As Picture
+  Dim z As Integer
+  Dialog.Title = "Select JSON File to parse database"
   Dialog.Filter = ["*.json", "JSON Data"]
   Dialog.OpenFile()
   ListView1.Clear
+  ListView2.Clear
   '= ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*.svg;*.wmf", "Drawing files"]
   ButtonBox1.Text = Dialog.Path
   database = JSON.Decode(File.Load(ButtonBox1.Text))
   
   
   For i = 0 To database["DATABASE"].count - 1
-    Print Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
+    Print ButtonBox2.Text & "/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
     Try Pic = Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
     Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
     If Error Then
+        ValueBox2.Value = +1
         ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
+        ListView2.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
     Endif
     Pic.Clear
   Next
@@ -26,7 +31,7 @@ Public Sub ButtonBox1_Click()
 End
 
 Public Sub Form_Open()
-
+  ButtonBox1.Enabled = False
   
 
 End
@@ -40,3 +45,20 @@ Public Sub ListView1_DblClick()
 
 End
 
+
+Public Sub ButtonBox2_Click()
+  Dialog.SelectDirectory
+  ButtonBox2.Text = Dialog.Path
+  If IsNull(Dialog.Path) = False Then
+    ButtonBox1.Enabled = True
+  Endif
+
+End
+
+Public Sub ListView2_DblClick()
+  
+  Try Print ListView2.Current.Text
+  Try Print ListView2.Current.Key
+  
+
+End
