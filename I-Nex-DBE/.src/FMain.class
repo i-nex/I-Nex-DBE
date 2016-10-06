@@ -12,13 +12,14 @@ Public Sub ButtonBox1_Click()
   ListView2.Clear
   '= ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*.svg;*.wmf", "Drawing files"]
   ButtonBox1.Text = Dialog.Path
+  DirPath = Left$(ButtonBox1.Text, (RInStr(ButtonBox1.Text, "/") - 1))
   database = JSON.Decode(File.Load(ButtonBox1.Text))
   
   
   For i = 0 To database["DATABASE"].count - 1
     Print ButtonBox2.Text & "/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
-    Try Pic = Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
-    Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(Application.path & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
+    Try Pic = Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
+    Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
     If Error Then
         ValueBox2.Value = +1
         ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
