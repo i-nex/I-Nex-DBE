@@ -5,6 +5,7 @@ Public Sub ButtonBox1_Click()
   Dim i As Integer
   Dim Pic As Picture
   Dim z As Integer
+  Dim DirPath As String
   Dialog.Title = "Select JSON File to parse database"
   Dialog.Filter = ["*.json", "JSON Data"]
   Dialog.OpenFile()
