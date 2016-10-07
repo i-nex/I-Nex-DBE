@@ -25,7 +25,7 @@ Public Sub ButtonBox1_Click()
     If Error Then
         ValueBox2.Value = +1
         ButtonBox2.Enabled = True
-                Print Message.Warning("Unable to find image for " & database["DATABASE"][i]["PROCESSOR_MODEL_NAME"] & ". Please set a Logos directory.", "OK")
+        Print Message.Warning("Unable to find image for " & database["DATABASE"][i]["PROCESSOR_MODEL_NAME"] & ". Please set a Logos directory.", "OK")
         Break
         ' ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
         ' ListView2.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
