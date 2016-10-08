@@ -1,19 +1,24 @@
 ' Gambas class file
 
 Public database As New Collection
+Public Node As Integer
+Public DirPath As String
 Public Sub ButtonBox1_Click()
   Dim i As Integer
   Dim Pic As Picture
   Dim z As Integer
-  Dim DirPath As String
+
   Dialog.Title = "Select JSON File to parse database"
   Dialog.Filter = ["*.json", "JSON Data"]
   Dialog.OpenFile()
   ListView1.Clear
   ListView2.Clear
+  Label3.Text = Null
+  TextBox1.Text = Null
+  
   '= ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*.svg;*.wmf", "Drawing files"]
   ButtonBox1.Text = Dialog.Path
-  DirPath = Left$(ButtonBox1.Text, (RInStr(ButtonBox1.Text, "/") - 1))
+  If IsNull(DirPath) = True Then DirPath = Left$(ButtonBox1.Text, (RInStr(ButtonBox1.Text, "/") - 1))
   database = JSON.Decode(File.Load(ButtonBox1.Text))
   
   
@@ -21,19 +26,22 @@ Public Sub ButtonBox1_Click()
     Print ButtonBox2.Text & "/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
     Try Pic = Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
     Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
+    Node = i
     If Error Then
         ValueBox2.Value = +1
-        ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
-        ListView2.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
+        ButtonBox2.Enabled = True
+        Try Print "Unable to find image for " & database["DATABASE"][i]["PROCESSOR_MODEL_NAME"] & ". Please set a Logos directory or verify the database entry."
+    Else
+      Pic.Clear
     Endif
-    Pic.Clear
-  Next
+   Next
+  If ValueBox2.Value > 0 Then Print Message.Warning("Invalid entries detected in JSON file.", "OK")
   ValueBox1.Value = ListView1.Count
   FileProperties1.Path = Dialog.Path
 End
 
 Public Sub Form_Open()
-  ButtonBox1.Enabled = False
+  ButtonBox2.Enabled = False
   
 
 End
@@ -46,14 +54,26 @@ Public Sub ListView1_DblClick()
   Form1.Show
 
 End
+Public Sub ListView1_Click()
 
+  Try Print ListView1.Current.Text
+  Try Print ListView1.Current.Key
+  ProcProperties(ListView1.Current.Key)
 
+End
+Public Sub ListView2_Click()
+
+  Label3.Text = Left$(ListView2.Current.Text, (RInStr(ListView2.Current.Text, ":") - 1)) & ":"
+  TextBox1.Text = Right$(ListView2.Current.Text, (InStr(ListView2.Current.Text, ":") * -1))
+
+End
 Public Sub ButtonBox2_Click()
   Dialog.SelectDirectory
   ButtonBox2.Text = Dialog.Path
   If IsNull(Dialog.Path) = False Then
     ButtonBox1.Enabled = True
-  Endif
+    DirPath = ButtonBox2.Text
+  Endif  
 
 End
 
@@ -61,6 +81,21 @@ Public Sub ListView2_DblClick()
   
   Try Print ListView2.Current.Text
   Try Print ListView2.Current.Key
+  Form1.Parsedata(ListView1.Current.Key)
+  Form1.Show
   
 
+End
+Public Function ProcProperties(id As Integer)
+  
+  Dim Index2 As Integer
+  Dim sAttrib As String
+  
+  ListView2.Clear
+  Index2 = 0
+  For Each sAttrib In database["DATABASE"][id]
+    ListView2.Add(Index2, database["DATABASE"][id].Key & ": " & sAttrib)
+    Index2 = Index2 + 1
+  Next
+  
 End
