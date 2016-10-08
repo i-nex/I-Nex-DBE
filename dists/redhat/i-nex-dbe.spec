@@ -3,7 +3,7 @@
 %define gitdate 20161005
 
 Name:           i-nex-dbe
-Version:        0.0.3
+Version:        0.0.4
 Release:        %{gitdate}.git%{gittag}%{?dist}
 Summary:        I-Nex JSON Database Editor
 

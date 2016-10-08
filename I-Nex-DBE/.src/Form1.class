@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Public Function Parsedata(id As Integer)
-  
+  PictureBox1.Picture = Picture.Load(FMain.DirPath & "/Logos/" & FMain.database["DATABASE"][id]["PROCESSOR_SOCKET_IMAGE"])
   TextBox1.Text = FMain.database["DATABASE"][id]["PROCESSOR_MODEL_NAME"]
   ComboBox1.Text = FMain.database["DATABASE"][id]["PROCESSOR_SOCKET"]
   ComboBox2.Text = FMain.database["DATABASE"][id]["PROCESSOR_PROCESS_SIZE"]
@@ -22,6 +22,9 @@ Public Function Parsedata(id As Integer)
   ComboBox4.Text = FMain.database["DATABASE"][id]["PROCESSOR_OFCORES"]
   Try SpinBox1.Value = CInt(FMain.database["DATABASE"][id]["PROCESSOR_SMPCPUS"])
   TextBox20.Text = FMain.database["DATABASE"][id]["PROCESSOR_INTEGRATEDGRAPHIC"]
+  TextBox21.Text = FMain.database["DATABASE"][id]["PROCESSOR_CACHEL1"]
+  TextBox22.Text = FMain.database["DATABASE"][id]["PROCESSOR_CACHEL2"]
+  TextBox23.Text = FMain.database["DATABASE"][id]["PROCESSOR_CACHEL3"]
 End
 
 
