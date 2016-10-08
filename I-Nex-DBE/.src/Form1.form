@@ -219,18 +219,22 @@
     { Label21 Label
       MoveScaled(0,3,17,4)
       Font = Font["Bold,Italic,Underline"]
+      Text = ("Level1")
     }
     { Label22 Label
       MoveScaled(0,8,17,4)
       Font = Font["Bold,Italic,Underline"]
+      Text = ("Level2")
     }
     { Label23 Label
       MoveScaled(0,13,17,4)
       Font = Font["Bold,Italic,Underline"]
+      Text = ("Level3")
     }
     { Label24 Label
       MoveScaled(0,18,17,4)
       Font = Font["Bold,Italic,Underline"]
+      Text = ("Level4")
     }
   }
 }
