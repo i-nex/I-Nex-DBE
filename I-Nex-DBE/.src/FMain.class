@@ -1,19 +1,24 @@
 ' Gambas class file
 
 Public database As New Collection
+Public Node As Integer
+Public DirPath As String
 Public Sub ButtonBox1_Click()
-  Dim i, i2 As Integer
+  Dim i As Integer
   Dim Pic As Picture
   Dim z As Integer
-  Dim DirPath As String
+
   Dialog.Title = "Select JSON File to parse database"
   Dialog.Filter = ["*.json", "JSON Data"]
   Dialog.OpenFile()
   ListView1.Clear
   ListView2.Clear
+  Label3.Text = Null
+  TextBox1.Text = Null
+  
   '= ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*.svg;*.wmf", "Drawing files"]
   ButtonBox1.Text = Dialog.Path
-  DirPath = Left$(ButtonBox1.Text, (RInStr(ButtonBox1.Text, "/") - 1))
+  If IsNull(DirPath) = True Then DirPath = Left$(ButtonBox1.Text, (RInStr(ButtonBox1.Text, "/") - 1))
   database = JSON.Decode(File.Load(ButtonBox1.Text))
   
   
@@ -21,18 +26,16 @@ Public Sub ButtonBox1_Click()
     Print ButtonBox2.Text & "/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]
     Try Pic = Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"])
     Try ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"], Picture.Load(DirPath & "/Logos/" & database["DATABASE"][i]["PROCESSOR_SOCKET_IMAGE"]))
-
+    Node = i
     If Error Then
         ValueBox2.Value = +1
         ButtonBox2.Enabled = True
-        Print Message.Warning("Unable to find image for " & database["DATABASE"][i]["PROCESSOR_MODEL_NAME"] & ". Please set a Logos directory.", "OK")
-        Break
-        ' ListView1.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
-        ' ListView2.Add(i, database["DATABASE"][i]["PROCESSOR_MODEL_NAME"])
+        Try Print "Unable to find image for " & database["DATABASE"][i]["PROCESSOR_MODEL_NAME"] & ". Please set a Logos directory or verify the database entry."
     Else
       Pic.Clear
     Endif
    Next
+  If ValueBox2.Value > 0 Then Print Message.Warning("Invalid entries detected in JSON file.", "OK")
   ValueBox1.Value = ListView1.Count
   FileProperties1.Path = Dialog.Path
 End
@@ -56,16 +59,21 @@ Public Sub ListView1_Click()
   Try Print ListView1.Current.Text
   Try Print ListView1.Current.Key
   ProcProperties(ListView1.Current.Key)
-  ' Form1.Show
 
 End
+Public Sub ListView2_Click()
 
+  Label3.Text = Left$(ListView2.Current.Text, (RInStr(ListView2.Current.Text, ":") - 1)) & ":"
+  TextBox1.Text = Right$(ListView2.Current.Text, (InStr(ListView2.Current.Text, ":") * -1))
+
+End
 Public Sub ButtonBox2_Click()
   Dialog.SelectDirectory
   ButtonBox2.Text = Dialog.Path
   If IsNull(Dialog.Path) = False Then
     ButtonBox1.Enabled = True
-  Endif
+    DirPath = ButtonBox2.Text
+  Endif  
 
 End
 
@@ -73,29 +81,21 @@ Public Sub ListView2_DblClick()
   
   Try Print ListView2.Current.Text
   Try Print ListView2.Current.Key
+  Form1.Parsedata(ListView1.Current.Key)
+  Form1.Show
   
 
 End
 Public Function ProcProperties(id As Integer)
   
+  Dim Index2 As Integer
+  Dim sAttrib As String
+  
   ListView2.Clear
-  ListView2.Add(0, "SOCKET: " & database["DATABASE"][id]["PROCESSOR_SOCKET"])
-  ListView2.Add(1, "SIZE: " & database["DATABASE"][id]["PROCESSOR_SIZE"])
-  ListView2.Add(2, "TRANSISTORS: " & database["DATABASE"][id]["PROCESSOR_TRANSISTORS"])
-  ListView2.Add(3, "DIE_SIZE: " & database["DATABASE"][id]["PROCESSOR_DIE_SIZE"])
-  ListView2.Add(4, "TCASEMAX: " & database["DATABASE"][id]["PROCESSOR_TCASEMAX"])
-  ListView2.Add(5, "FREQ: " & database["DATABASE"][id]["PROCESSOR_FREQUENCY"])
-  ListView2.Add(6, "TURBOCLOCK: " & database["DATABASE"][id]["PROCESSOR_TURBOCLOCK"])
-  ListView2.Add(7, "MULTIPLIER: " & database["DATABASE"][id]["PROCESSOR_MULTIPLIER"])
-  ListView2.Add(8, "VOLTAGE: " & database["DATABASE"][id]["PROCESSOR_VOLTAGE"])
-  ListView2.Add(9, "TDP: " & database["DATABASE"][id]["PROCESSOR_TDP"])
-  ListView2.Add(10, "MARKET: " & database["DATABASE"][id]["PROCESSOR_MARKET"])
-  ListView2.Add(11, "PRODUCTION: " & database["DATABASE"][id]["PROCESSOR_PRODUCTION_STATUS"])
-  ListView2.Add(12, "RELEASED: " & database["DATABASE"][id]["PROCESSOR_RELEASED"])
-  ListView2.Add(13, "CODENAME: " & database["DATABASE"][id]["PROCESSOR_CODENAME"])
-  ListView2.Add(14, "PART: " & database["DATABASE"][id]["PROCESSOR_PART"])
-  ListView2.Add(15, "MEMORY: " & database["DATABASE"][id]["PROCESSOR_MEMORYSUPPORT"])
-  ListView2.Add(16, "OFCORES: " & database["DATABASE"][id]["PROCESSOR_OFCORES"])
-  ListView2.Add(17, "SMPCPUS: " & database["DATABASE"][id]["PROCESSOR_SMPCPUS"])
-  ListView2.Add(18, "GRAPHICS: " & database["DATABASE"][id]["PROCESSOR_INTEGRATEDGRAPHIC"])
+  Index2 = 0
+  For Each sAttrib In database["DATABASE"][id]
+    ListView2.Add(Index2, database["DATABASE"][id].Key & ": " & sAttrib)
+    Index2 = Index2 + 1
+  Next
+  
 End
